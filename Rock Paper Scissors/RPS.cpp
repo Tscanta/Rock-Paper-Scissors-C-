@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <cctype>
 #include <ctime>
@@ -40,6 +41,7 @@ int main() {
 //GETTING USER CHOICE
 char getUserChoice()
 {
+    string input;
     char player;
     cout << "---------ROCK PAPER SCISSORS SHOOT!!!-----------\n";
     do
@@ -48,9 +50,19 @@ char getUserChoice()
         cout << "Press 'R' for ROCK\n";
         cout << "Press 'P' for PAPER\n";
         cout << "Press 'S' for SCISSORS\n";
-        cin >> player;
-        cin.ignore();
-        player = toupper(player);
+        getline(cin, input);
+        //cin.ignore();
+
+        //Trim whitespaces and making it able to enter only a single character and not whole words
+        input.erase(0,input.find_first_not_of(" \t"));
+        input.erase(input.find_last_not_of(" \t") + 1);
+
+        if (input.length() != 1) {
+            cout << "ERROR: Enter ONLY a single character (R, P, or S)\n";
+            continue;
+        }
+
+        player = toupper(input[0]);
 
         //Clear any previous errors
         cin.clear();
